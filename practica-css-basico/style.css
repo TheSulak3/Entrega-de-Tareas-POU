@@ -1,0 +1,154 @@
+/* --- Reinicio y base --- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #1A1A1A;
+  background-color: #F4F4F4;
+}
+
+/* --- Contenedor del artículo --- */
+.articulo {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  border: 1px solid #CCCCCC;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+#articulo {
+  line-height: 1.5;
+}
+
+/* --- Títulos --- */
+h1,
+h2,
+h3 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #0B3C5D;
+}
+
+h2 {
+  margin: 24px 0 12px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #CCCCCC;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: left;
+  color: #0B3C5D;
+}
+
+h3 {
+  font-size: 14px;
+  text-align: left;
+  color: #1D6A9E;
+}
+
+/* --- Datos del autor --- */
+.autor {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.afiliacion,
+.contacto {
+  margin: 0 0 2px 0;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* --- Texto corrido --- */
+p {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+.resumen {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border-left: 4px solid #0B3C5D;
+  font-size: 11px;
+  font-style: italic;
+  text-align: justify;
+}
+
+.palabras-clave {
+  margin: 0 0 12px 0;
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* --- Enlaces --- */
+a {
+  color: #1D6A9E;
+}
+
+a:hover {
+  color: #C0392B;
+  text-decoration: underline;
+}
+
+/* --- Tablas --- */
+table {
+  width: 100%;
+  margin: 12px 0;
+  border-collapse: collapse;
+}
+
+th {
+  border: 1px solid #CCCCCC;
+  padding: 8px;
+  background-color: #EFEFEF;
+  color: #0B3C5D;
+  text-align: left;
+}
+
+td {
+  border: 1px solid #CCCCCC;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.titulo-tabla,
+figcaption {
+  margin: 0 0 8px 0;
+  font-size: 11px;
+  font-style: italic;
+  text-align: center;
+}
+
+/* --- Figuras --- */
+img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* --- Referencias --- */
+.referencias {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.referencias li {
+  margin-bottom: 4px;
+  padding-left: 24px;
+  text-indent: -24px;
+  font-size: 11px;
+}

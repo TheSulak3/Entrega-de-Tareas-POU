@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Themida como sistema de protección de software: técnicas documentadas y relevancia en seguridad informática</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Themida como sistema de protección de software: técnicas documentadas y relevancia en seguridad informática</h1>
+    <p class="autor">Daniel Eduardo García Hernández</p>
+    <p class="afiliacion">Técnico en Desarrollo de Software · Universidad Centroamericana José Simeón Cañas (UCA)</p>
+    <p class="contacto">00253220@uca.edu.sv</p>
+  </header>
+
+  <main id="articulo" class="articulo">
+    <section>
+      <h2>Resumen</h2>
+      <p class="resumen">Este artículo describe las técnicas de protección que el fabricante documenta para Themida, un protector de aplicaciones Windows, y explica por qué también aparece en el análisis de malware. Se realizó una revisión documental de seis fuentes públicas: la página oficial del producto, su comparación con Code Virtualizer, dos entradas de MITRE ATT&amp;CK, un artículo académico sobre ofuscadores por virtualización y un análisis de malware protegido. Las funciones declaradas se agruparon en una tabla comparativa. Se concluye que Themida combina anti-análisis, virtualización y cifrado para proteger propiedad intelectual, pero que otros actores lo usan para ocultar código malicioso, por lo que su detección requiere observar comportamiento y no solo firmas.</p>
+    </section>
+
+    <section>
+      <h2>Palabras clave</h2>
+      <ul class="palabras-clave">
+        <li>anti-depuración</li>
+        <li>ingeniería inversa</li>
+        <li>ofuscación</li>
+        <li>protección de software</li>
+        <li>virtualización de código</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>I. Introducción</h2>
+      <p>Un programa distribuido como ejecutable puede estudiarse con ingeniería inversa, lo que expone sus algoritmos y sus validaciones de licencia. Para dificultarlo existen los protectores de software, y uno conocido en Windows es Themida, de Oreans Technologies [1]. El objetivo de este artículo es describir las técnicas que el fabricante declara para Themida y explicar por qué importan en seguridad informática, tanto para proteger software legítimo como para entender su uso en malware.</p>
+    </section>
+
+    <section>
+      <h2>II. Marco teórico</h2>
+      <h3>Empaquetado y ofuscación</h3>
+      <p>MITRE define el empaquetado de software como la compresión o el cifrado de un ejecutable, lo que cambia su firma de archivo para evitar la detección basada en firmas [2]. Esta práctica es una subtécnica de la ofuscación de archivos o información, mediante la cual se ocultan contenidos para dificultar su análisis [3].</p>
+      <h3>Virtualización de código</h3>
+      <p>Rolles explica que un ofuscador por virtualización traduce código x86 a un código intermedio propio, que ejecuta un intérprete también ofuscado. A diferencia de los empaquetadores simples, nunca restaura el código original en memoria, por lo que el análisis estático y dinámico habitual resulta poco práctico [4]. El propio fabricante indica que Themida es un superconjunto de Code Virtualizer, pues incluye su motor de virtualización y añade cifrado, compresión y envoltura de API [5].</p>
+    </section>
+
+    <section>
+      <h2>III. Metodología o desarrollo</h2>
+      <p>Es una revisión documental: no se ejecutaron muestras ni se probó el producto. Los pasos fueron:</p>
+      <ol>
+        <li>Se seleccionaron fuentes: documentación del fabricante, la base MITRE ATT&amp;CK, un artículo académico y un análisis técnico de un proveedor de sandbox.</li>
+        <li>Se extrajeron las funciones que el fabricante declara para Themida.</li>
+        <li>Se agruparon en categorías: anti-análisis, virtualización y mutación, cifrado y transformación, y protección en ejecución.</li>
+        <li>Se contrastaron con MITRE y con el análisis de malware protegido para ver cómo se tratan en seguridad.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>IV. Resultados y discusión</h2>
+      <table>
+        <caption class="titulo-tabla">Tabla I. Funciones que el fabricante declara para Themida, por categoría</caption>
+        <thead>
+          <tr>
+            <th>Categoría</th>
+            <th>Función declarada</th>
+            <th>Propósito (interpretación propia)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Anti-análisis</td>
+            <td>Detección de depuradores, anti-trazado, anti-desensamblado y anti-monitores de archivos y registro</td>
+            <td>Dificultar el análisis estático y dinámico</td>
+          </tr>
+          <tr>
+            <td>Virtualización y mutación</td>
+            <td>Emulación de máquina virtual en bloques de código y motores mutador y metamórfico</td>
+            <td>Ocultar las instrucciones originales</td>
+          </tr>
+          <tr>
+            <td>Cifrado y transformación</td>
+            <td>Algoritmos y claves distintos por aplicación, compresión e inserción de código basura aleatorio</td>
+            <td>Evitar patrones repetibles</td>
+          </tr>
+          <tr>
+            <td>Protección en ejecución</td>
+            <td>Hilos de protección, protección del punto de entrada y envoltura de API</td>
+            <td>Mantener la protección mientras el programa corre</td>
+          </tr>
+          <tr>
+            <td>Integridad</td>
+            <td>Comprobaciones CRC y anti-parcheo de memoria</td>
+            <td>Detectar modificaciones del programa</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>La tabla muestra un diseño por capas, que el fabricante presenta como un conjunto [1]. MITRE lista a Themida entre los ejemplos usados por grupos como APT41 [2]. Sin embargo, un análisis de seis familias de malware encontró que las muestras usaban los protectores casi siempre como empaquetadores simples: ninguna empleó virtualización de código y solo una activó anti-depuración, y sus autores concluyen que la dificultad principal estaba en la propia ofuscación del malware [6]. Como limitación, las afirmaciones del fabricante no se verificaron de forma independiente.</p>
+    </section>
+
+    <section>
+      <h2>V. Conclusiones</h2>
+      <p>Themida agrupa técnicas de anti-análisis, virtualización, cifrado y protección en ejecución para proteger la propiedad intelectual de aplicaciones Windows. El objetivo se cumplió al describirlas con fuentes públicas. También se observó que la misma protección sirve para ocultar código malicioso, por lo que MITRE recomienda detección heurística y análisis de comportamiento, y no solo firmas [2]. Como trabajo futuro, se podría comparar Themida con otros protectores.</p>
+    </section>
+
+    <section>
+      <h2>Referencias</h2>
+      <ol class="referencias">
+        <li>[1] Oreans Technologies, «Themida: Advanced Windows software protection system», Oreans.com. [En línea]. Disponible en: <a href="https://www.oreans.com/Themida.php">https://www.oreans.com/Themida.php</a>. Consultado: 18 oct. 2026.</li>
+        <li>[2] MITRE, «Obfuscated Files or Information: Software Packing, T1027.002», MITRE ATT&amp;CK. [En línea]. Disponible en: <a href="https://attack.mitre.org/techniques/T1027/002/">https://attack.mitre.org/techniques/T1027/002/</a>. Consultado: 18 oct. 2026.</li>
+        <li>[3] MITRE, «Obfuscated Files or Information, T1027», MITRE ATT&amp;CK. [En línea]. Disponible en: <a href="https://attack.mitre.org/techniques/T1027/">https://attack.mitre.org/techniques/T1027/</a>. Consultado: 18 oct. 2026.</li>
+        <li>[4] R. Rolles, «Unpacking virtualization obfuscators», en <i>3rd USENIX Workshop on Offensive Technologies (WOOT '09)</i>, 2009. [En línea]. Disponible en: <a href="https://static.usenix.org/events/woot09/tech/full_papers/rolles.pdf">https://static.usenix.org/events/woot09/tech/full_papers/rolles.pdf</a></li>
+        <li>[5] Oreans Technologies, «What are the differences between Code Virtualizer and Themida?», Code Virtualizer Help, FAQ. [En línea]. Disponible en: <a href="https://oreans.com/help/cv/hm_faq_what-are-the-differences-betwe.htm">https://oreans.com/help/cv/hm_faq_what-are-the-differences-betwe.htm</a>. Consultado: 18 oct. 2026.</li>
+        <li>[6] OverviewEffect, «Analyzing malware protected with Themida and VMProtect: Is it really that hard?», ANY.RUN Cybersecurity Blog, 18 jun. 2024. [En línea]. Disponible en: <a href="https://any.run/cybersecurity-blog/vmprotect-themida-malware-analysis/">https://any.run/cybersecurity-blog/vmprotect-themida-malware-analysis/</a></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <p>Programación Orientada al Usuario · UCA · Octubre de 2026</p>
+    <p>Declaración de autoría: el tema, la selección de fuentes, el código HTML/CSS y la revisión final son míos . La redacción del texto se hizo con apoyo de IA.</p>
+  </footer>
+</body>
+</html>
